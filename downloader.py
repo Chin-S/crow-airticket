@@ -8,9 +8,14 @@ class downloader:
             return None
         request = urllib2.Request(url)
         request.add_header('User-Agent',self.user_agent)
-        response = urllib2.urlopen(request,timeout=20)
-        if response.getcode() != 200:
-            print('%s failed'%url)
-            return None
-        print("collecting %s"%url)
-        return response.read()
+        try:
+            response = urllib2.urlopen(request,timeout=20)
+            if response.getcode() != 200:
+
+                print('%s failed'%url)
+                return None
+            html = response.read()
+            return html
+        except Exception as e:
+            print e.as_string()
+            pass
