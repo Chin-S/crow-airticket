@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import re
 class myparser:
-    def parse(self,content):
+    def parse(self,content,url):
         if len is None:
            return None
         data = []
@@ -22,9 +22,10 @@ class myparser:
             temp['to_time'] = pattern_to_time.search(item).group(1)
             temp['from_place'] = pattern_from_place.search(item).group(1)
             temp['to_place'] = pattern_to_place.search(item).group(1)
-            temp['company'] = str(pattern_company.findall(item))
+            temp['company'] = ''.join(pattern_company.findall(item)) 
             temp['price'] = pattern_price.search(item).group(1)
             temp['moreinfo'] = pattern_moreinfo.search(item).group(1)
+            temp['url'] = url
             data.append(temp)
         return data
         
