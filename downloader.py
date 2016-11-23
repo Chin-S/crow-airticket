@@ -6,16 +6,16 @@ class downloader:
         if url is None:
             print('error url is empty')
             return None
+        print url
         request = urllib2.Request(url)
         request.add_header('User-Agent',self.user_agent)
         try:
-            response = urllib2.urlopen(request,timeout=20)
+            response = urllib2.urlopen(request,timeout=90)
             if response.getcode() != 200:
-
                 print('%s failed'%url)
                 return None
             html = response.read()
             return html
         except Exception as e:
-            print e.as_string()
+            print e
             pass

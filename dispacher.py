@@ -1,5 +1,4 @@
 #-*-coding:utf-8-*-
-import myparser
 import downloader
 import threading
 import urlmanager
@@ -9,19 +8,21 @@ import time
 class dispacter:
     def __init__(self,startcity,destcity,blockdate):
         self.downloader = downloader.downloader()
-        self.myparser = myparser.myparser()
         self.urlmanager = urlmanager.urlmanager(startcity,destcity,blockdate)
         self.handler = handler.handler()
     def start(self): 
         while(self.urlmanager.has_uncrowedurl()):
             url = self.urlmanager.get_uncrowedurl()
             html = self.downloader.download(url)
-            content = self.myparser.parse(html,url)
-            self.handler.handle(content)
+            time = 0
+            handle_result = False
+            while not handle_result and time<3:
+                handle_result = self.handler.handle(html)
+                time += 1
 if __name__ == '__main__':
     while(True):
-        crow1 = dispacter('成都','西安','2017-02-10')
-        crow2 = dispacter('南充','西安','2017-02-10')
+        crow1 = dispacter('CTU','XIY','2017-02-10')
+        crow2 = dispacter('NAO','XIY','2017-02-10')
         threads = []
         crow1_thread = threading.Thread(target = crow1.start())
         threads.append(crow1_thread)

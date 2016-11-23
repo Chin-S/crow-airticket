@@ -1,10 +1,9 @@
 #-*-coding:utf-8-*-
 import datetime
 import time
-# https://touch.qunar.com/h5/flight/flightlist?startCity=%E5%8C%97%E4%BA%AC&&destCity=%E4%B8%8A%E6%B5%B7&destCode=&startDate=2016-11-19&backDate=&flightType=oneWay
 class urlmanager:
     def __init__(self,startcity,destcity,blockdate):
-        self.base = 'https://touch.qunar.com/h5/flight/flightlist?flightType=oneway&'
+        self.base = 'http://m.ly.com/flightnew/json/firstflightlist.html?'
         self.start_city = startcity
         self.dest_city = destcity
         self.block_date = datetime.datetime.strptime(blockdate,'%Y-%m-%d').date()
@@ -17,7 +16,7 @@ class urlmanager:
         print self.block_date
         while(start_date != self.block_date):
             date_str = start_date.strftime('%Y-%m-%d')
-            url = self.base+'startCity=%s&'%self.start_city+'destCity=%s&'%self.dest_city+'startDate=%s'%date_str
+            url = self.base+'oc=%s&'%self.start_city+'ac=%s&'%self.dest_city+'arrt=%s'%date_str
             self.urls.add(url)
             start_date = start_date+datetime.timedelta(1)
     def has_uncrowedurl(self):
